@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Heart, ShoppingBag, Minus, Plus, Truck, RotateCcw, ShieldCheck, ChevronDown } from 'lucide-react';
 import { products } from '../data/mock';
 import { useCart } from '../context/CartContext';
+import { useWishlist } from '../context/WishlistContext';
 import ProductCard from '../components/ProductCard';
 import { toast } from 'sonner';
 
@@ -22,18 +23,25 @@ const Product = () => {
   const { slug } = useParams();
   const product = useMemo(() => products.find((p) => p.slug === slug) || products[0], [slug]);
   const { addItem } = useCart();
+  const { isWished, toggle } = useWishlist();
   const [activeImg, setActiveImg] = useState(product.images[0]);
   const [size, setSize] = useState(product.sizes[0]);
   const [qty, setQty] = useState(1);
-  const [wished, setWished] = useState(false);
 
   React.useEffect(() => {
     setActiveImg(product.images[0]);
     setSize(product.sizes[0]);
     setQty(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [product]);
 
+  const wished = isWished(product.id);
   const related = products.filter((p) => p.id !== product.id && (p.category === product.category || p.era === product.era)).slice(0, 8);
+
+  const handleWish = async () => {
+    const added = await toggle(product);
+    toast.success(added ? 'Added to wishlist ♥' : 'Removed from wishlist');
+  };
 
   return (
     <div className="max-w-[1480px] mx-auto px-4 lg:px-10 py-10">
@@ -81,10 +89,13 @@ const Product = () => {
               <span className="w-10 text-center">{qty}</span>
               <button onClick={() => setQty(qty + 1)} className="w-11 h-12 flex items-center justify-center"><Plus size={14} /></button>
             </div>
-            <button onClick={() => addItem(product, { size, qty })} className="flex-1 h-12 bg-[#1a1a1a] text-white uppercase-spaced text-[11px] flex items-center justify-center gap-2 hover:bg-[#c43a47] transition-colors">
+            <button onClick={() => { addItem(product, { size, qty }); toast.success('Added to bag!'); }}
+              className="flex-1 h-12 bg-[#1a1a1a] text-white uppercase-spaced text-[11px] flex items-center justify-center gap-2 hover:bg-[#c43a47] transition-colors">
               <ShoppingBag size={14} /> Add to Bag
             </button>
-            <button onClick={() => { setWished((v) => !v); toast.success(wished ? 'Removed from wishlist' : 'Added to wishlist'); }} className={`h-12 w-12 border ${wished ? 'border-[#c43a47] text-[#c43a47]' : 'border-neutral-300 text-neutral-700'} flex items-center justify-center hover:border-[#c43a47] hover:text-[#c43a47]`} aria-label="wishlist">
+            <button onClick={handleWish}
+              className={`h-12 w-12 border ${wished ? 'border-[#c43a47] text-[#c43a47]' : 'border-neutral-300 text-neutral-700'} flex items-center justify-center hover:border-[#c43a47] hover:text-[#c43a47]`}
+              aria-label="wishlist">
               <Heart size={16} fill={wished ? '#c43a47' : 'none'} />
             </button>
           </div>
@@ -96,7 +107,7 @@ const Product = () => {
           </div>
 
           <div className="mt-8">
-            <Accordion title="Description" defaultOpen>{product.description} Made with love and a touch of vintage spirit. Imported.</Accordion>
+            <Accordion title="Description" defaultOpen>{product.description} Made with love and a touch of vintage spirit.</Accordion>
             <Accordion title="Details & Care">Hand wash cold. Lay flat to dry. Do not bleach. Imported. Model is 5'9" wearing a size S.</Accordion>
             <Accordion title="Shipping & Returns">Free domestic shipping on orders $150+. Returns accepted within 30 days for unworn items with original tags.</Accordion>
           </div>

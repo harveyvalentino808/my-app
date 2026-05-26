@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Search, User, Heart, ShoppingBag, Menu, X, ChevronRight } from 'lucide-react';
 import { navMenu } from '../data/mock';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import { useWishlist } from '../context/WishlistContext';
 
 const AnnouncementBar = () => {
   const target = new Date();
@@ -18,7 +20,6 @@ const AnnouncementBar = () => {
       setTime({ h, m, s });
     }, 1000);
     return () => clearInterval(t);
-    // eslint-disable-next-line
   }, []);
   return (
     <div className="bg-[#1a1a1a] text-white text-[12px] tracking-[0.18em] uppercase">
@@ -78,12 +79,15 @@ const Header = () => {
   const [searchOpen, setSearchOpen] = useState(false);
   const [q, setQ] = useState('');
   const { count, setIsOpen } = useCart();
+  const { user } = useAuth();
+  const { count: wishCount } = useWishlist();
   const navigate = useNavigate();
 
   const submitSearch = (e) => {
     e.preventDefault();
     if (q.trim()) navigate(`/search?q=${encodeURIComponent(q.trim())}`);
     setSearchOpen(false);
+    setQ('');
   };
 
   return (
@@ -91,7 +95,7 @@ const Header = () => {
       <AnnouncementBar />
       <div className="border-b border-neutral-200">
         <div className="max-w-[1480px] mx-auto px-4 lg:px-10 h-[72px] grid grid-cols-3 items-center">
-          {/* Left: mobile menu + search */}
+          {/* Left */}
           <div className="flex items-center gap-4">
             <button onClick={() => setMobileOpen(true)} className="lg:hidden" aria-label="menu"><Menu size={22} /></button>
             <button onClick={() => setSearchOpen((v) => !v)} className="hidden lg:flex items-center gap-2 text-[13px] text-neutral-700 hover:text-black">
@@ -105,8 +109,17 @@ const Header = () => {
           </Link>
           {/* Right: icons */}
           <div className="flex items-center gap-5 justify-self-end text-neutral-800">
-            <Link to="/account" className="hidden sm:flex items-center gap-2 text-[13px] hover:text-black"><User size={18} /><span className="hidden md:inline">Account</span></Link>
-            <Link to="/account" className="hidden md:flex items-center gap-2 text-[13px] hover:text-black"><Heart size={18} /><span className="hidden lg:inline">Wishlist</span></Link>
+            <Link to="/account" className="hidden sm:flex items-center gap-2 text-[13px] hover:text-black">
+              <User size={18} />
+              <span className="hidden md:inline">{user ? user.first_name : 'Account'}</span>
+            </Link>
+            <Link to="/wishlist" className="hidden md:flex items-center gap-2 text-[13px] hover:text-black relative">
+              <Heart size={18} />
+              <span className="hidden lg:inline">Wishlist</span>
+              {wishCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-[#c43a47] text-white text-[10px] rounded-full w-[18px] h-[18px] flex items-center justify-center">{wishCount}</span>
+              )}
+            </Link>
             <button onClick={() => setIsOpen(true)} className="relative flex items-center gap-2 text-[13px]" aria-label="open cart">
               <ShoppingBag size={20} />
               <span className="hidden md:inline">Cart</span>
@@ -162,9 +175,9 @@ const Header = () => {
               ))}
             </ul>
             <div className="mt-8 space-y-3 text-[13px]">
-              <Link to="/account" onClick={() => setMobileOpen(false)} className="block">My Account</Link>
+              <Link to="/account" onClick={() => setMobileOpen(false)} className="block">{user ? `My Account (${user.first_name})` : 'Sign In / Register'}</Link>
+              <Link to="/wishlist" onClick={() => setMobileOpen(false)} className="block">Wishlist {wishCount > 0 && `(${wishCount})`}</Link>
               <Link to="/about" onClick={() => setMobileOpen(false)} className="block">About Us</Link>
-              <a href="#" className="block">Help & Returns</a>
             </div>
           </div>
         </div>

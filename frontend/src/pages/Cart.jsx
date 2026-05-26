@@ -1,19 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2 } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const Cart = () => {
   const { items, subtotal, updateQty, removeItem } = useCart();
+  const navigate = useNavigate();
   const shipping = subtotal > 150 || subtotal === 0 ? 0 : 9.95;
   const tax = subtotal * 0.085;
   const total = subtotal + shipping + tax;
 
   return (
     <div className="max-w-[1480px] mx-auto px-4 lg:px-10 py-12">
-      <h1 className="font-display text-[34px] md:text-[44px] text-center">Your Shopping Bag</h1>
+      <nav className="text-[12px] text-neutral-500 mb-4"><Link to="/" className="hover:underline">Home</Link> / Shopping Bag</nav>
+      <h1 className="font-display text-[34px] md:text-[44px]">Your Shopping Bag</h1>
       {items.length === 0 ? (
         <div className="py-20 text-center">
+          <ShoppingBag size={44} className="mx-auto text-neutral-200 mb-4" />
           <p className="text-[15px] text-neutral-600">Your bag is empty.</p>
           <Link to="/" className="inline-block mt-6 bg-[#1a1a1a] text-white px-8 py-3 uppercase-spaced text-[11px] hover:bg-[#c43a47]">Continue Shopping</Link>
         </div>
@@ -32,6 +35,7 @@ const Cart = () => {
                   <div>
                     <Link to={`/products/${it.slug}`} className="font-display text-[15px] hover:text-[#c43a47]">{it.title}</Link>
                     <div className="text-[12px] text-neutral-500 mt-1">Size: {it.size}</div>
+                    <div className="text-[13px] mt-1">${it.price.toFixed(2)}</div>
                   </div>
                 </div>
                 <div className="flex items-center border border-neutral-300 w-fit">
@@ -44,16 +48,21 @@ const Cart = () => {
               </div>
             ))}
           </div>
-          <aside className="bg-[#faf5ee] p-6 h-fit">
+          <aside className="bg-[#faf5ee] p-6 h-fit sticky top-24">
             <h2 className="uppercase-spaced text-[12px] mb-5">Order Summary</h2>
             <div className="space-y-3 text-[14px]">
               <div className="flex justify-between"><span>Subtotal</span><span>${subtotal.toFixed(2)}</span></div>
-              <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span></div>
+              <div className="flex justify-between"><span>Shipping</span><span>{shipping === 0 ? <span className="text-green-700">Free</span> : `$${shipping.toFixed(2)}`}</span></div>
               <div className="flex justify-between"><span>Estimated tax</span><span>${tax.toFixed(2)}</span></div>
               <div className="border-t border-neutral-300 pt-3 flex justify-between text-[16px] font-semibold"><span>Total</span><span>${total.toFixed(2)}</span></div>
             </div>
-            <button className="w-full mt-6 bg-[#1a1a1a] text-white uppercase-spaced text-[11px] py-3.5 hover:bg-[#c43a47] transition-colors">Checkout</button>
-            <p className="text-[11px] text-neutral-500 mt-4 text-center">Free shipping on orders $150+</p>
+            <button onClick={() => navigate('/checkout')} className="w-full mt-6 bg-[#1a1a1a] text-white uppercase-spaced text-[11px] py-3.5 hover:bg-[#c43a47] transition-colors">
+              Proceed to Checkout
+            </button>
+            <Link to="/" className="block text-center mt-3 text-[12px] underline text-neutral-500 hover:text-[#1a1a1a]">Continue Shopping</Link>
+            {subtotal < 150 && subtotal > 0 && (
+              <p className="text-[11px] text-neutral-500 mt-3 text-center">Add ${(150 - subtotal).toFixed(2)} more for free shipping!</p>
+            )}
           </aside>
         </div>
       )}

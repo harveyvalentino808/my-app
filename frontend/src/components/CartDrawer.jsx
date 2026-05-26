@@ -50,7 +50,7 @@ const CartDrawer = () => {
               </div>
               <div className="text-[11px] text-neutral-500">Shipping & taxes calculated at checkout. Free shipping on orders $150+.</div>
               <Link to="/cart" onClick={() => setIsOpen(false)} className="block text-center border border-[#1a1a1a] text-[#1a1a1a] uppercase-spaced text-[11px] py-3 hover:bg-neutral-50">View Cart</Link>
-              <button className="w-full bg-[#1a1a1a] text-white uppercase-spaced text-[11px] py-3 hover:bg-[#c43a47] transition-colors">Checkout</button>
+              <Link to="/checkout" onClick={() => setIsOpen(false)} className="block w-full bg-[#1a1a1a] text-white uppercase-spaced text-[11px] py-3 hover:bg-[#c43a47] transition-colors text-center">Checkout</Link>
             </div>
           </>
         )}
