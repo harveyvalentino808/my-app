@@ -13,6 +13,7 @@ const AnnouncementBar = () => {
   useEffect(() => {
     const t = setInterval(() => {
       const now = new Date();
+      // eslint-disable-next-line
       let diff = Math.max(0, Math.floor((target - now) / 1000));
       const h = String(Math.floor(diff / 3600)).padStart(2, '0');
       const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
@@ -20,9 +21,10 @@ const AnnouncementBar = () => {
       setTime({ h, m, s });
     }, 1000);
     return () => clearInterval(t);
+    // eslint-disable-next-line
   }, []);
   return (
-    <div className="bg-[#1a1a1a] text-white text-[12px] tracking-[0.18em] uppercase">
+    <div className="bg-[#2d5a3d] text-white text-[12px] tracking-[0.18em] uppercase">
       <div className="max-w-[1480px] mx-auto px-4 h-9 flex items-center justify-center gap-4">
         <span className="hidden sm:inline">30% Off Sitewide ends in</span>
         <span className="sm:hidden">Sale ends in</span>
@@ -35,7 +37,7 @@ const AnnouncementBar = () => {
 };
 
 const Box = ({ children }) => (
-  <span className="inline-block bg-white text-[#1a1a1a] px-1.5 py-0.5 rounded-sm text-[11px] font-semibold">{children}</span>
+  <span className="inline-block bg-white text-[#2d5a3d] px-1.5 py-0.5 rounded-sm text-[11px] font-semibold">{children}</span>
 );
 
 const MegaMenu = ({ item, open }) => {
@@ -95,19 +97,16 @@ const Header = () => {
       <AnnouncementBar />
       <div className="border-b border-neutral-200">
         <div className="max-w-[1480px] mx-auto px-4 lg:px-10 h-[72px] grid grid-cols-3 items-center">
-          {/* Left */}
           <div className="flex items-center gap-4">
             <button onClick={() => setMobileOpen(true)} className="lg:hidden" aria-label="menu"><Menu size={22} /></button>
             <button onClick={() => setSearchOpen((v) => !v)} className="hidden lg:flex items-center gap-2 text-[13px] text-neutral-700 hover:text-black">
               <Search size={18} /> Search
             </button>
           </div>
-          {/* Center: logo */}
           <Link to="/" className="justify-self-center flex flex-col items-center leading-none">
-            <span className="font-display text-[26px] sm:text-[30px] tracking-[0.02em]">unique vintage</span>
-            <span className="uppercase-spaced text-[9px] text-neutral-500 mt-0.5">est. 2000 · los angeles</span>
+            <span className="font-display text-[26px] sm:text-[30px] tracking-[0.02em]">verdant clothier</span>
+            <span className="uppercase-spaced text-[9px] text-neutral-500 mt-0.5">est. 2025 · verdantclothier.com</span>
           </Link>
-          {/* Right: icons */}
           <div className="flex items-center gap-5 justify-self-end text-neutral-800">
             <Link to="/account" className="hidden sm:flex items-center gap-2 text-[13px] hover:text-black">
               <User size={18} />
@@ -131,18 +130,16 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Search bar */}
         {searchOpen && (
           <div className="border-t border-neutral-200 bg-white fade-down">
             <form onSubmit={submitSearch} className="max-w-[1480px] mx-auto px-4 lg:px-10 h-14 flex items-center gap-3">
               <Search size={18} className="text-neutral-500" />
-              <input value={q} onChange={(e) => setQ(e.target.value)} autoFocus placeholder="What are you looking for, darling?" className="flex-1 outline-none text-[14px]" />
+              <input value={q} onChange={(e) => setQ(e.target.value)} autoFocus placeholder="What are you looking for?" className="flex-1 outline-none text-[14px]" />
               <button type="button" onClick={() => setSearchOpen(false)} aria-label="close"><X size={18} /></button>
             </form>
           </div>
         )}
 
-        {/* Desktop Nav */}
         <nav className="hidden lg:block relative" onMouseLeave={() => setActive(null)}>
           <ul className="max-w-[1480px] mx-auto px-10 h-12 flex items-center justify-center gap-8">
             {navMenu.map((item) => (
@@ -157,12 +154,11 @@ const Header = () => {
         </nav>
       </div>
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 bg-black/40" onClick={() => setMobileOpen(false)}>
           <div className="absolute left-0 top-0 bottom-0 w-[85%] max-w-sm bg-white p-5 overflow-auto" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-6">
-              <span className="font-display text-[22px]">unique vintage</span>
+              <span className="font-display text-[22px]">verdant clothier</span>
               <button onClick={() => setMobileOpen(false)}><X size={20} /></button>
             </div>
             <ul className="space-y-1">

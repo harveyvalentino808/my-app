@@ -1,4 +1,4 @@
-// API client untuk Unique Vintage backend
+// API client untuk Verdant Clothier backend
 const BASE_URL = process.env.REACT_APP_BACKEND_URL || '';
 
 const getToken = () => localStorage.getItem('uv_token');

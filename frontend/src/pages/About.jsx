@@ -9,27 +9,27 @@ const About = () => (
       <img src="https://www.unique-vintage.com/cdn/shop/files/1920s_954b735e-df8d-4fb0-a66b-24cddd7d902d.jpg?v=1723507792&width=1920" alt="" className="w-full h-full object-cover" />
       <div className="absolute inset-0 bg-black/35 flex flex-col items-center justify-center text-white text-center px-4">
         <span className="uppercase-spaced text-[12px]">Our Story</span>
-        <h1 className="font-display text-[44px] md:text-[60px] mt-3">25 Years of Vintage Love</h1>
+        <h1 className="font-display text-[44px] md:text-[60px] mt-3">Our Story of Vintage Love</h1>
         <p className="text-[14px] max-w-xl mt-3">A women-owned brand celebrating fashion across the decades — from the roaring '20s to the rebellious Y2K.</p>
       </div>
     </section>
 
     <section className="py-16">
       <div className="max-w-3xl mx-auto px-4 text-center">
-        <span className="uppercase-spaced text-[11px] text-neutral-500">Est. 2000 · Los Angeles</span>
+        <span className="uppercase-spaced text-[11px] text-neutral-500">Est. 2025 · Los Angeles</span>
         <h2 className="font-display text-[30px] md:text-[40px] mt-3">Hello, darling.</h2>
-        <p className="text-[15px] text-neutral-700 mt-5 leading-relaxed">Unique Vintage was founded with the belief that fashion's past is its future. From flapper-inspired fringe to mod minis and Y2K nostalgia, we curate vintage-inspired pieces designed for the modern muse — in sizes XS through 5X.</p>
-        <p className="text-[15px] text-neutral-700 mt-4 leading-relaxed">Over a million customers later, our Los Angeles boutique still feels like a love letter to every decade we adore.</p>
+        <p className="text-[15px] text-neutral-700 mt-5 leading-relaxed">Verdant Clothier was founded with the belief that fashion's past is its future. From flapper-inspired fringe to mod minis and Y2K nostalgia, we curate vintage-inspired pieces designed for the modern muse — in sizes XS through 5X.</p>
+        <p className="text-[15px] text-neutral-700 mt-4 leading-relaxed">Our growing community of fashion lovers connects over a shared love of vintage-inspired style — timeless looks for the modern muse.</p>
       </div>
     </section>
 
     <section className="py-10 bg-[#faf5ee]">
       <div className="max-w-[1200px] mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
         {[
-          { icon: Calendar, t: 'Est. 2000', s: 'Celebrating 25 years' },
+          { icon: Calendar, t: 'Est. 2025', s: 'Celebrating our journey' },
           { icon: Heart, t: 'Women Owned', s: '& proudly operated' },
           { icon: Sparkles, t: 'XS – 5X', s: 'Inclusive sizing' },
-          { icon: MapPin, t: 'Los Angeles', s: 'Burbank flagship' },
+          { icon: MapPin, t: 'Los Angeles', s: 'Online & Worldwide' },
         ].map((b) => (
           <div key={b.t} className="text-center">
             <div className="w-14 h-14 bg-white rounded-full mx-auto flex items-center justify-center border border-neutral-200"><b.icon size={22} className="text-[#c43a47]" /></div>

@@ -27,7 +27,7 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer(auto_error=False)
 
-app = FastAPI(title="Unique Vintage API")
+app = FastAPI(title="Verdant Clothier API")
 api_router = APIRouter(prefix="/api")
 
 logging.basicConfig(level=logging.INFO)
@@ -356,7 +356,7 @@ async def get_order(order_id: str, current_user=Depends(get_current_user)):
 
 @api_router.get("/")
 async def root():
-    return {"message": "Unique Vintage API is running", "version": "2.0"}
+    return {"message": "Verdant Clothier API is running", "version": "2.0"}
 
 app.include_router(api_router)
 

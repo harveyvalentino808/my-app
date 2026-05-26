@@ -82,7 +82,7 @@ const Collection = () => {
             <Link to="/" className="hover:underline">Home</Link> / <span className="text-neutral-700">{title}</span>
           </nav>
           <h1 className="font-display text-[34px] md:text-[44px]">{title}</h1>
-          <p className="text-[13px] text-neutral-600 mt-3 max-w-2xl">Add the hottest new pieces to your wardrobe with vintage-inspired styles from Unique Vintage — spanning the 1920s through Y2K.</p>
+          <p className="text-[13px] text-neutral-600 mt-3 max-w-2xl">Add the hottest new pieces to your wardrobe with vintage-inspired styles from Verdant Clothier — spanning the 1920s through Y2K.</p>
         </div>
       </div>
 
