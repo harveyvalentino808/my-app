@@ -25,7 +25,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <BrowserRouter>
+            <BrowserRouter basename="/proxy/39627">
               <Header />
               <CartDrawer />
               <main className="min-h-screen">
