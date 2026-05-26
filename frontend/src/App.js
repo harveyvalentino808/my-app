@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { CartProvider } from './context/CartContext';
 import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
@@ -25,7 +25,7 @@ function App() {
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
-            <BrowserRouter basename="/proxy/39627">
+            <HashRouter>
               <Header />
               <CartDrawer />
               <main className="min-h-screen">
@@ -44,7 +44,7 @@ function App() {
               </main>
               <Footer />
               <Toaster position="top-center" />
-            </BrowserRouter>
+            </HashRouter>
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>
